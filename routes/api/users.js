@@ -56,21 +56,24 @@ router.post("/register", (req, res) => {
 // @description Login a user / return JWT token
 // @access Public
 router.post("/login", (req, res) =>{
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
     const email = req.body.email;
     const password = req.body.password;
  
     //Find user by email (email = email)
     User.findOne({email}).then(user =>{
         if (!user){
-            return res.status(400).json({
-                email: 'User not found'
-            });
+            errors.email = 'User not found';
+            return res.status(400).json(errors);
         }
         bcrypt.compare(password, user.password).then(isMatch => {
             if (!isMatch){
-                return res.status(400).json({
-                    password: 'Password does not match.'
-                    });
+                errors.email = "Password does not match."
+                return res.status(400).json(errors);
             }
             const payload = {
                 id: user.id,
