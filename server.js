@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
 //DB config
 const db = require('./config/keys').mongoURI;
+mongoose.set('useFindAndModify', false);
 
 //Passport config
 app.use(passport.initialize());
