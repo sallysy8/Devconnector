@@ -16,13 +16,13 @@ import {setCurrentUser, logoutUser} from './actions/authActions';
 //check for token
 if (localStorage.jwtToken){
 
-//set auth token header
+  //set auth token header
   setAuthToken(localStorage.jwtToken);
-//decode token and get the user
+  //decode token and get the user
   const decoded = jwt_decode(localStorage.jwtToken);
-//set user to redux
+  //set user to redux
   store.dispatch(setCurrentUser(decoded));
-//check for expired token
+  //check for expired token
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime){
     //logout user
